@@ -10,7 +10,7 @@ import request from '@/utils/requset'
 export default {
   name: 'app',
   methods: {
-    async getData () {
+    async getChannles () {
       const { data } = await request({
         url: '/app/v1_0/channels'
       })
@@ -18,7 +18,7 @@ export default {
     }
   },
   created () {
-    this.getData()
+    this.getChannles()
   }
 }
 </script>
