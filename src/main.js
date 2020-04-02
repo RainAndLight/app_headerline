@@ -3,9 +3,16 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
-import { Button } from 'vant'
+import Vant from 'vant'
+import 'vant/lib/index.css'
 
-Vue.use(Button)
+Vue.use(Vant)
+// import { Button, Cell, CellGroup } from 'vant'
+
+// Vue
+//   .use(Button)
+//   .use(Cell)
+//   .use(CellGroup)
 
 Vue.config.productionTip = false
 
