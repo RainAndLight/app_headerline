@@ -43,7 +43,7 @@
 <script>
 // import request from '@/utils/requset'
 import { Toast } from 'vant'
-import login from '@/api/user'
+import { login } from '@/api/user'
 export default {
   data () {
     return {
