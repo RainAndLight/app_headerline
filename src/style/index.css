@@ -1,0 +1,7 @@
+.van-nav-bar {
+  background-color: #3296fa;
+  font-size: 25px;
+}
+.van-nav-bar .van-nav-bar__title {
+  color: white;
+}

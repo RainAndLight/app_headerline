@@ -6,6 +6,9 @@ import store from './store'
 import Vant from 'vant'
 import 'vant/lib/index.css'
 
+import './style/index.css'
+import request from '@/utils/requset'
+Vue.use(request)
 Vue.use(Vant)
 // import { Button, Cell, CellGroup } from 'vant'
 
