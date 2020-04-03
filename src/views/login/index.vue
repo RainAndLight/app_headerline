@@ -4,36 +4,40 @@
     <van-nav-bar title="登录" />
     <!-- /navbar栏 -->
 
-    <!-- 输入框 -->
-    <van-cell-group style="padding:0 10px">
-      <!-- 输入手机号，调起手机号键盘 -->
-      <van-form @submit="onSubmit">
-        <van-field
-          left-icon="phone-o"
-          v-model="user.mobile"
-          placeholder="手机号"
-          size="large"
-          autofocus
-          required
-          :rules="[{ required: true, message: '请填写手机号' }]"
-        />
-        <van-field
-          left-icon="contact"
-          v-model="user.code"
-          placeholder="验证码"
-          size="large"
-          required
-          :rules="[{ required: true, message: '请填写验证码' }]"
-        />
+    <!-- 登录表单 -->
+    <ValidationObserver ref="loginRef">
+      <!-- 输入框 -->
+      <van-cell-group style="padding:0 10px">
+        <ValidationProvider name="手机号" rules="required|max:11" v-slot="{ errors }">
+          <!-- 输入手机号，调起手机号键盘 -->
+          <van-field
+            left-icon="phone-o"
+            v-model="user.mobile"
+            placeholder="手机号"
+            size="large"
+            required
+            :error-message="errors[0]"
+          />
+        </ValidationProvider>
+        <ValidationProvider name="验证码" rules="required|max:6" v-slot="{ errors }">
+          <van-field
+            left-icon="contact"
+            v-model="user.code"
+            placeholder="验证码"
+            size="large"
+            required
+            :error-message="errors[0]"
+            type="password"
+          />
+        </ValidationProvider>
         <!-- 提交按钮 -->
         <div class="go_box">
-          <van-button native-type="submit" @click="commit" class="btn_go" size="large" round>登录</van-button>
+          <van-button @click="commit" class="btn_go" size="large" round>登录</van-button>
         </div>
         <!-- /提交按钮 -->
-      </van-form>
-    </van-cell-group>
-    <!--/ 输入框 -->
-
+      </van-cell-group>
+      <!--/ 输入框 -->
+    </ValidationObserver>
     <!-- 底部链接 -->
     <div class="privacy">隐私</div>
     <!-- /底部链接 -->
@@ -55,6 +59,8 @@ export default {
   },
   methods: {
     async commit () {
+      const isVail = await this.$refs.loginRef.validate()
+      if (!isVail) { return }
       const toast = Toast.loading({
         duration: 0, // 持续展示 toast
         forbidClick: true,
@@ -70,6 +76,7 @@ export default {
         // 封装api
         const data = await login(this.user)
         console.log(data)
+
         // loding 结束
         toast.clear()
         Toast.success({
