@@ -8,7 +8,7 @@
     <ValidationObserver ref="loginRef">
       <!-- 输入框 -->
       <van-cell-group style="padding:0 10px">
-        <ValidationProvider name="手机号" rules="required|max:11" v-slot="{ errors }">
+        <ValidationProvider name="手机号" rules="required|phone|max:11" v-slot="{ errors }">
           <!-- 输入手机号，调起手机号键盘 -->
           <van-field
             left-icon="phone-o"
@@ -48,6 +48,7 @@
 // import request from '@/utils/requset'
 import { Toast } from 'vant'
 import { login } from '@/api/user'
+import { getItem } from '@/utils/storage'
 export default {
   data () {
     return {
@@ -58,6 +59,7 @@ export default {
     }
   },
   methods: {
+    // 点击提交
     async commit () {
       const isVail = await this.$refs.loginRef.validate()
       if (!isVail) { return }
@@ -74,8 +76,10 @@ export default {
         // })
 
         // 封装api
-        const data = await login(this.user)
-        console.log(data)
+        const { data } = await login(this.user)
+        console.log(data, 'login')
+        // 将token存到Vuex中
+        this.$store.commit('getToken', data.data)
 
         // loding 结束
         toast.clear()
@@ -89,7 +93,20 @@ export default {
           Toast.fail('您的输入有误')
         }
       }
+    },
+    async getLocalstorageToken () {
+      console.log(123456)
+      // getItem('token').then(res => { console.log(res, 'getToken') })
+      // 将localstorage中的token存入到Vuex中
+      if (this.$store.state.user === null) {
+        // getItem('token').then(res => { this.$store.state.user.token = res })
+        const data = await getItem('token')
+        this.$store.state.user = data
+      }
     }
+  },
+  created () {
+    this.getLocalstorageToken()
   }
 }
 </script>
