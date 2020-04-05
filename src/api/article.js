@@ -15,3 +15,10 @@ export function getArticelsList (params) {
     params
   })
 }
+
+// 获取所有频道
+export function getAllChannels () {
+  return request({
+    url: '/app/v1_0/channels'
+  })
+}
