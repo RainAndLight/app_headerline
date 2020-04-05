@@ -11,7 +11,7 @@
     </van-nav-bar>
 
     <!-- tab标签栏 -->
-    <van-tabs v-model="active" sticky>
+    <van-tabs v-model="active" sticky swipeable animated>
       <van-tab v-for="item in channle" :title="item.name" :key="item.id">
         <!-- list栏 -->
         <!-- 下拉刷新 -->
@@ -134,7 +134,7 @@ export default {
 }
 </script>
 
-<style>
+<style >
 .top_search {
   margin-top: 7px;
   width: 200px;
@@ -148,7 +148,7 @@ export default {
     margin-right: 10px;
     margin-top: 10px;
 }
-/* .van-tabs /deep/ .van-tabs__wrap--scrollable {
+.van-tabs /deep/ .van-tabs__wrap--scrollable {
     position: fixed;
     top: 46px;
     left: 0;
@@ -158,5 +158,6 @@ export default {
 
   .van-tabs /deep/ .van-tabs__content {
     margin-top: 90px;
-  } */
+    margin-bottom: 50px;
+  }
 </style>
